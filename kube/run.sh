@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# start cluster
-minikube start --driver=docker --memory 4096
-
 # download ISTIO
 curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.17.2 sh -
 
