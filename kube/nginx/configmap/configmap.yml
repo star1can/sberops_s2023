@@ -7,7 +7,7 @@ data:
   default.conf: |-
     server {
         listen 80;
-        location / {
+        location /pokemons/all {
             proxy_pass http://pokemon-service-cip/pokemons/get-all;
         }
     }
