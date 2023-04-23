@@ -1,0 +1,31 @@
+1) качаем ISTIO
+curl -L https://istio.io/downloadIstio | sh -
+2) экспортируем путь до бинарников
+cd istio-1.17.2
+export PATH=$PWD/bin:$PATH
+3) создаем кластер
+minikube start --driver=docker --memory 4096
+4) добавляем сущности ISTIO в кластер
+istioctl manifest apply --set profile=demo
+5) проверим, что все создалось(обратить внимание на IngressGateway и EgressGateWay)
+kubectl get svc -n istio-system
+6) выделяем external-IP для istio-ingressgateway
+minikube tunnel
+7) делаем автоматический автоинжекшн сайдкар прокси к любому поду в ns default
+kubectl label namespace default istio-injection=enabled
+8) создадим сервис
+kubectl apply -f pokemon-service/service.yml -f pokemon-service/configmap/configmap.yml
+kubectl get deployment
+9) добавяем политики ingress и virtual service
+
+----на minikube не работает!!!!!----
+10) тушим туннель
+11) sudo minikube IP
+12) смотрим на маппинг портов в LB
+------------------------------------
+
+13) запретим выходящий трафик по умолчанию для чистоты эксперимента
+istioctl install --set profile=demo --set meshConfig.outboundTrafficPolicy.mode=REGISTRY_ONLY
+14) проверим
+kubectl get istiooperator -n istio-system -o yaml (ищи REGISTRY_ONLY)
+15)

@@ -1,0 +1,16 @@
+version: '3.7'
+services:
+
+  app:
+    image: starican/pokemon-service:latest
+    container_name: pokemon-service
+    networks:
+      - app-network
+    ports:
+      - '8083:8081'
+
+    restart: on-failure
+
+networks:
+  app-network:
+    driver: bridge
