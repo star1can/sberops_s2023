@@ -1,7 +1,6 @@
 package config
 
 import (
-	"encoding/json"
 	"gitlab.atp-fivt.org/courses/homework-solutions/pokemon-api-client/handlers"
 	"net/http"
 	"os"
@@ -14,13 +13,9 @@ type Config struct {
 	Port int
 }
 
-func createMux() *http.ServeMux {
+func getMux() *http.ServeMux {
 	mux := http.NewServeMux()
-	mux.HandleFunc("/pokemons", func(w http.ResponseWriter, r *http.Request) {
-		bytes, _ := json.Marshal(handlers.GetPokemons())
-		w.Write(bytes)
-	})
-
+	mux.Handle("/pokemons/", http.StripPrefix("/pokemons", handlers.PokemonsMux()))
 	return mux
 }
 
@@ -41,5 +36,5 @@ func GetConfig() *Config {
 		panic(err)
 	}
 
-	return &Config{Mux: createMux(), Host: host, Port: port}
+	return &Config{Mux: getMux(), Host: host, Port: port}
 }

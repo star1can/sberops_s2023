@@ -11,15 +11,10 @@ import (
 
 func serve(conf *config.Config) {
 	fmt.Println("Starting app at PORT " + strconv.Itoa(conf.Port))
-	err := http.ListenAndServe(conf.Host+":"+strconv.Itoa(conf.Port), conf.Mux)
-	defer fmt.Println("Finishing app...")
-	if err != nil {
-		return
-	}
+	log.Fatal(http.ListenAndServe(conf.Host+":"+strconv.Itoa(conf.Port), conf.Mux))
 }
 
 func init() {
-	// loads values from .env into the system
 	if err := godotenv.Load(); err != nil {
 		log.Print("No .env file found")
 	}

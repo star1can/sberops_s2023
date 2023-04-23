@@ -8,6 +8,6 @@ data:
     server {
         listen 80;
         location / {
-            proxy_pass http://pokemon-service-cip/pokemons;
+            proxy_pass http://pokemon-service-cip/pokemons/get-all;
         }
     }
