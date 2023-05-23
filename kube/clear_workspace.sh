@@ -6,6 +6,7 @@ kubectl delete vs pokeapi-through-egress-gateway pokemon-service-ingress
 kubectl delete cm nginx-cm pokemon-service-cm
 kubectl delete svc pokemon-service-cip nginx-cip
 kubectl delete gateway pokeapi-egressgateway pokemon-service-gateway
+kubectl delete secret pokemons-secret
 kubectl label namespace default istio-injection=disabled
 
 cd istio-1.17.2
@@ -15,3 +16,4 @@ cd ..
 
 ../docker/clear-image.sh
 rm -fr istio-1.17.2
+rm -fr certs
