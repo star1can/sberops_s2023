@@ -1,4 +1,4 @@
-# HW2: MTLS, Egress and K8S
+# HW3: MTLS, Egress and K8S
 
 <img width="470" alt="Снимок экрана 2023-05-25 в 01 10 21" src="https://github.com/star1can/sberops_s2023/assets/45429125/755df194-d2e4-4b4d-9d31-1f139e3e0609">
 
