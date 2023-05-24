@@ -1,7 +1,7 @@
 package service
 
 const (
-	URL string = "https://pokeapi.co/api/v2/pokemon/"
+	URL string = "http://pokeapi.mesh-external.svc.cluster.local/api/v2/pokemon/"
 )
 
 type PokemonService interface {

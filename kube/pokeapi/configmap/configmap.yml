@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pokeapi-cm
+  namespace: mesh-external
+data:
+  nginx.conf: |-
+    events {
+    }
+    http {
+      log_format main '$remote_addr - $remote_user [$time_local]  $status '
+      '"$request" $body_bytes_sent "$http_referer" '
+      '"$http_user_agent" "$http_x_forwarded_for"';
+      access_log /var/log/nginx/access.log main;
+      error_log  /var/log/nginx/error.log debug;
+
+      server {
+          listen 443 ssl;
+    
+          location /api/v2/pokemon/ {
+              default_type application/json;
+              return 200 '{"count":1,"results":[{"name":"bulbasaur","url":"http://pokeapi.mesh-external.svc.cluster.local/api/v2/pokemon/1/"}]}';
+          }
+          
+          location /api/v2/pokemon/1/ {
+              default_type application/json;
+              return 200 '{"id":1,"name":"bulbasaur","order":1,"base_experience":64,"height":7,"is_default":true,"weight":69}';
+          }
+          
+          server_name pokeapi.mesh-external.svc.cluster.local;
+          ssl_certificate /etc/nginx-server-certs/tls.crt;
+          ssl_certificate_key /etc/nginx-server-certs/tls.key;
+          ssl_client_certificate /etc/nginx-ca-certs/pokemons.com.crt;
+          ssl_verify_client on;
+      }
+    }

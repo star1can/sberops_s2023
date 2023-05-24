@@ -15,3 +15,4 @@ cd ..
 
 ../docker/clear-image.sh
 rm -fr istio-1.17.2
+rm -fr certs

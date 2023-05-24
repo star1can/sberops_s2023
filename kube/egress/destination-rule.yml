@@ -1,0 +1,16 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: pokeapi-dr
+spec:
+  host: pokeapi.mesh-external.svc.cluster.local
+  trafficPolicy:
+    loadBalancer:
+      simple: ROUND_ROBIN
+    portLevelSettings:
+      - port:
+          number: 443
+        tls:
+          mode: MUTUAL
+          credentialName: client-secret
+          sni: pokeapi.mesh-external.svc.cluster.local

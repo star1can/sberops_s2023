@@ -4,13 +4,31 @@ metadata:
   name: pokeapi-egressgateway
 spec:
   selector:
-    app: istio-egressgateway
+    istio: egressgateway
   servers:
     - port:
         number: 443
-        name: tls
-        protocol: TLS
+        name: https
+        protocol: HTTPS
       hosts:
-        - pokeapi.co
+        - pokeapi.mesh-external.svc.cluster.local
       tls:
-        mode: PASSTHROUGH
+        mode: ISTIO_MUTUAL
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: pokeapi-dr
+spec:
+  host: istio-egressgateway.istio-system.svc.cluster.local
+  subsets:
+    - name: pokeapi
+      trafficPolicy:
+        loadBalancer:
+          simple: ROUND_ROBIN
+        portLevelSettings:
+          - port:
+              number: 443
+            tls:
+              mode: ISTIO_MUTUAL
+              sni: pokeapi.mesh-external.svc.cluster.local

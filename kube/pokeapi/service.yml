@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pokeapi
+  namespace: mesh-external
+spec:
+  selector:
+    matchLabels:
+      run: pokeapi
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: pokeapi
+    spec:
+      containers:
+        - name: pokeapi-container
+          image: nginx
+          ports:
+            - containerPort: 443
+          volumeMounts:
+            - name: nginx-config
+              mountPath: /etc/nginx
+              readOnly: true
+            - name: nginx-server-certs
+              mountPath: /etc/nginx-server-certs
+              readOnly: true
+            - name: nginx-ca-certs
+              mountPath: /etc/nginx-ca-certs
+              readOnly: true
+      volumes:
+        - name: nginx-config
+          configMap:
+            name: pokeapi-cm
+        - name: nginx-server-certs
+          secret:
+            secretName: nginx-server-certs
+        - name: nginx-ca-certs
+          secret:
+            secretName: nginx-ca-certs
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pokeapi
+  namespace: mesh-external
+  labels:
+    run: pokeapi
+spec:
+  ports:
+    - port: 443
+      protocol: TCP
+  selector:
+    run: pokeapi
