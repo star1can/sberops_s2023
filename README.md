@@ -1,6 +1,6 @@
-# HW1: Ingress, Egress and K8S
+# HW2: MTLS, Egress and K8S
 
-<img width="737" alt="Снимок экрана 2023-04-23 в 23 36 11" src="https://user-images.githubusercontent.com/45429125/233864955-bf2ec8c9-9d0e-4101-9639-3ec775c386d0.png">
+<img width="470" alt="Снимок экрана 2023-05-25 в 01 10 21" src="https://github.com/star1can/sberops_s2023/assets/45429125/755df194-d2e4-4b4d-9d31-1f139e3e0609">
 
 # Описание
 
@@ -35,7 +35,7 @@
 
 Если все сделано правильно, Вы увидите список доступных покемонов:
 
-<img width="208" alt="Снимок экрана 2023-04-24 в 01 59 40" src="https://user-images.githubusercontent.com/45429125/233870752-f01f98b1-d752-4d3f-ab79-304bce58fdc1.png">
+<img width="177" alt="Снимок экрана 2023-05-25 в 01 09 54" src="https://github.com/star1can/sberops_s2023/assets/45429125/d6697abf-909a-4db1-b939-35916b3a0f19">
 
 ### Очистка
 В папке `kube`:
