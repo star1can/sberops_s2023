@@ -8,27 +8,9 @@ spec:
   servers:
     - port:
         number: 443
-        name: https
-        protocol: HTTPS
+        name: tls
+        protocol: TLS
       hosts:
-        - pokeapi.mesh-external.svc.cluster.local
+        - pokeapi.co
       tls:
-        mode: ISTIO_MUTUAL
----
-apiVersion: networking.istio.io/v1alpha3
-kind: DestinationRule
-metadata:
-  name: pokeapi-dr
-spec:
-  host: istio-egressgateway.istio-system.svc.cluster.local
-  subsets:
-    - name: pokeapi
-      trafficPolicy:
-        loadBalancer:
-          simple: ROUND_ROBIN
-        portLevelSettings:
-          - port:
-              number: 443
-            tls:
-              mode: ISTIO_MUTUAL
-              sni: pokeapi.mesh-external.svc.cluster.local
+        mode: PASSTHROUGH

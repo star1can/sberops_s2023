@@ -4,29 +4,31 @@ metadata:
   name: pokeapi-through-egress-gateway
 spec:
   hosts:
-    - pokeapi.mesh-external.svc.cluster.local
+    - pokeapi.co
   gateways:
-    - pokeapi-egressgateway
     - mesh
-  http:
+    - pokeapi-egressgateway
+  tls:
     - match:
         - gateways:
             - mesh
-          port: 80
+          port: 443
+          sniHosts:
+            - pokeapi.co
       route:
         - destination:
             host: istio-egressgateway.istio-system.svc.cluster.local
-            subset: pokeapi
             port:
               number: 443
-          weight: 100
     - match:
         - gateways:
             - pokeapi-egressgateway
           port: 443
+          sniHosts:
+            - pokeapi.co
       route:
         - destination:
-            host: pokeapi.mesh-external.svc.cluster.local
+            host: pokeapi.co
             port:
               number: 443
           weight: 100
